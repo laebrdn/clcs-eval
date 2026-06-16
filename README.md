@@ -205,23 +205,40 @@ pytest tests/ -v   # 28 tests
 ## References & Acknowledgements
 
 ### Dataset
-- Brand24/mms — Multilingual Social Media Sentiment, 28 languages.
-  <https://huggingface.co/datasets/Brand24/mms>
+- Brand24/mms — Multilingual Social Media Sentiment, 28 languages. https://huggingface.co/datasets/Brand24/mms
 
 ### Pre-trained Models
-- XLM-R — Conneau et al. (2020). ACL 2020. <https://arxiv.org/abs/1911.02116>
-- mBERT — Devlin et al. (2019). NAACL-HLT. <https://arxiv.org/abs/1810.04805>
-- DeBERTaV3 — He et al. (2021). ICLR 2021. <https://arxiv.org/abs/2111.09543>
-- DistilBERT — Sanh et al. (2019). <https://arxiv.org/abs/1910.01108>
-- Helsinki-NLP OPUS-MT — Tiedemann & Thottingal (2020). EAMT 2020.
-  <https://aclanthology.org/2020.eamt-1.61/>
-
-### Training & Statistics
-- AdamW — Loshchilov & Hutter (2019). <https://arxiv.org/abs/1711.05101>
-- Wilcoxon signed-rank test — Wilcoxon (1945). Biometrics Bulletin, 1(6).
-- Mann-Whitney U / rank-biserial r — Mann & Whitney (1947); Kerby (2014).
+- XLM-R — Conneau et al. (2020). ACL 2020. https://arxiv.org/abs/1911.02116
+- mBERT — Devlin et al. (2019). NAACL-HLT. https://arxiv.org/abs/1810.04805
+- DeBERTaV3 — He et al. (2021). ICLR 2021. https://arxiv.org/abs/2111.09543
+- DistilBERT — Sanh et al. (2019). https://arxiv.org/abs/1910.01108
+- Helsinki-NLP OPUS-MT — Tiedemann & Thottingal (2020). EAMT 2020. https://aclanthology.org/2020.eamt-1.61/
 
 ### Libraries
 - HuggingFace Transformers & Datasets — Wolf et al. (2020); Lhoest et al. (2021).
-- PyTorch — Paszke et al. (2019). <https://arxiv.org/abs/1912.01703>
-- NumPy, SciPy, pandas, Matplotlib, seaborn.
+- PyTorch — Paszke et al. (2019). https://arxiv.org/abs/1912.01703
+- NumPy — Harris et al. (2020). Array programming with NumPy. Nature, 585, 357–362. https://doi.org/10.1038/s41586-020-2649-2
+- SciPy — Virtanen et al. (2020). SciPy 1.0: Fundamental algorithms for scientific computing in Python. Nature Methods, 17, 261–272. https://doi.org/10.1038/s41592-019-0686-2
+- pandas — McKinney (2010). Data structures for statistical computing in Python. Proceedings of the 9th Python in Science Conference, 56–61. https://doi.org/10.25080/Majora-92bf1922-00a
+- Matplotlib — Hunter (2007). Matplotlib: A 2D graphics environment. Computing in Science & Engineering, 9(3), 90–95. https://doi.org/10.1109/MCSE.2007.55
+- seaborn — Waskom (2021). seaborn: statistical data visualization. Journal of Open Source Software, 6(60), 3021. https://doi.org/10.21105/joss.03021
+
+### Related Work
+
+Cross-Lingual Consistency
+
+- Qi, Fernández & Bisazza (2023) — Cross-Lingual Consistency of Factual Knowledge in Multilingual Language Models. EMNLP 2023 (Outstanding Paper Award). https://aclanthology.org/2023.emnlp-main.658/
+- Guo et al. (2025) — How Reliable is Multilingual LLM-as-a-Judge? Findings of EMNLP 2025. https://aclanthology.org/2025.findings-emnlp.587/
+
+Multilingual Sentiment Benchmarks
+
+- Augustyniak et al. (2023) — Massively Multilingual Corpus of Sentiment Datasets and Multi-faceted Sentiment Classification Benchmark.
+- NeurIPS 2023 D&B Track. https://openreview.net/forum?id=7tMgzSvopH
+- Muhammad et al. (2023) — AfriSenti: A Twitter Sentiment Analysis Benchmark for African Languages. EMNLP 2023. https://aclanthology.org/2023.emnlp-main.862/
+- Chen et al. (2025) — Cross-lingual Multimodal Sentiment Analysis for Low-Resource Languages via Language Family Disentanglement and Rethinking Transfer. Findings of ACL 2025. https://aclanthology.org/2025.findings-acl.338/
+
+Cross-Lingual Transfer & LLM Evaluation
+
+- Asai et al. (2024) — BUFFET: Benchmarking Large Language Models for Few-Shot Cross-Lingual Transfer. NAACL 2024. https://aclanthology.org/2024.naacl-long.100/
+- Wang et al. (2023) — GradSim: Gradient-Based Language Grouping for Effective Multilingual Training. EMNLP 2023. https://aclanthology.org/2023.emnlp-main.282/
+- Šmíd et al. (2025) — LACA: Improving Cross-Lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation. ACL 2025. https://aclanthology.org/2025.acl-long.41/
