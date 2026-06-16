@@ -202,23 +202,6 @@ pytest tests/ -v   # 28 tests
 
 ---
 
-## Citation
-
-If you use CLCS or this codebase, please cite:
-
-```bibtex
-@mastersthesis{simon2026clcs,
-  author  = {Simon, Laetitia},
-  title   = {Cross-Lingual Consistency of Sentiment: Benchmarking and
-             Fine-Tuning Multilingual Language Models},
-  school  = {Master's Programme in Machine Learning / NLP},
-  year    = {2026},
-  note    = {Code: \url{https://github.com/laetitiasimon/clcs-eval}}
-}
-```
-
----
-
 ## References & Acknowledgements
 
 ### Dataset
