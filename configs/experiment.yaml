@@ -1,0 +1,52 @@
+# CLCS Evaluation — Experiment Configuration
+# All parameters used in the reported runs (May 2026).
+# Pass these explicitly when reproducing; CLI flags override these values.
+
+# ── Parallel corpus ────────────────────────────────────────────────────────────
+parallel_corpus:
+  n_source_texts: 500          # English source texts sampled from MMS
+  confidence_threshold: 0.85   # CleanLab self-confidence filter
+  seed: 42
+  train_eval_split: 0.80       # 80% train (400 source IDs), 20% eval (100 source IDs)
+  train_file: data/processed/parallel_corpus_train.csv
+  eval_file:  data/processed/parallel_corpus_eval.csv
+
+# ── Inference ─────────────────────────────────────────────────────────────────
+inference:
+  batch_size: 32
+  max_length: 128
+  # Encoder models evaluated: mbert, xlmr-base, mdeberta
+  # Generative models evaluated: llama3.1 (8B, Ollama), aya-expanse (8B, Ollama)
+
+# ── CLCS evaluation ───────────────────────────────────────────────────────────
+clcs:
+  mode: corrected              # Use --corrected flag in compute_clcs.py
+  shared_languages: 27         # English excluded (LLMs had no EN predictions)
+  common_source_ids: 312       # Intersection across all models × languages
+  language_pairs: 351          # C(27,2)
+
+# ── Consistency fine-tuning sweep ─────────────────────────────────────────────
+finetuning:
+  base_model: xlm-roberta-base
+  warm_start: models/xlmr-base_sentiment
+  seed: 42
+  epochs: 3                    # Epoch 1 is best checkpoint in practice
+  batch_size: 32
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  warmup_fraction: 0.10
+  max_length: 128
+  max_ce_rows: 500000          # Proportional stratified sample across 28 languages
+  ce_val_fraction: 0.10
+  lambda_sweep: [0.5, 1.0]    # λ values evaluated; λ=0.5 epoch 1 is best
+  kl_train_corpus: data/processed/parallel_corpus_train.csv
+  clcs_eval_corpus: data/processed/parallel_corpus_eval.csv
+  checkpoint_dir: results/checkpoints
+
+# ── Baselines (reported in paper) ─────────────────────────────────────────────
+baselines:
+  xlmr_base_clcs: 0.7896
+  xlmr_base_val_acc: 0.7845
+  # Fine-tuned best: xlmr_lambda0.5/epoch_1
+  #   val_clcs: 0.8627  (+0.073 over baseline)
+  #   val_acc:  0.7671

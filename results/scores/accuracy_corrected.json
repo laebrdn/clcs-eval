@@ -1,0 +1,22 @@
+{
+  "aya-expanse": {
+    "accuracy": 0.718067,
+    "macro_f1": 0.720281
+  },
+  "llama3.1": {
+    "accuracy": 0.687797,
+    "macro_f1": 0.687127
+  },
+  "mbert": {
+    "accuracy": 0.500119,
+    "macro_f1": 0.467141
+  },
+  "mdeberta": {
+    "accuracy": 0.380817,
+    "macro_f1": 0.344546
+  },
+  "xlmr-base": {
+    "accuracy": 0.784544,
+    "macro_f1": 0.780416
+  }
+}

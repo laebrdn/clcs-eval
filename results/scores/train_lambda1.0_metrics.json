@@ -1,0 +1,27 @@
+{
+  "run": {
+    "lambda": 1.0,
+    "batch_size": 32,
+    "lr": 2e-05,
+    "max_ce_rows": 500000,
+    "seed": 42
+  },
+  "epochs": {
+    "1": {
+      "train_ce": 0.5852,
+      "train_kl": 0.0245,
+      "train_total": 0.6097,
+      "val_ce": 0.5391,
+      "val_acc": 0.7666,
+      "val_clcs": 0.854
+    },
+    "2": {
+      "train_ce": 0.5027,
+      "train_kl": 0.005,
+      "train_total": 0.5077,
+      "val_ce": 0.5368,
+      "val_acc": 0.7754,
+      "val_clcs": 0.8399
+    }
+  }
+}

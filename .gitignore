@@ -1,0 +1,32 @@
+# Virtual environment
+.venv/
+
+# Raw and processed data (large, reproducible from HuggingFace)
+data/raw/
+data/processed/
+
+# Model weights and checkpoints (large, not for version control)
+models/
+results/checkpoints/
+results/predictions/
+*.bin
+*.safetensors
+*.pt
+
+# Training logs
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Environment / secrets (never commit)
+.env

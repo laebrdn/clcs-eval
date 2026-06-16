@@ -1,0 +1,32 @@
+{
+  "note": "CLCS inflated — eval set overlaps with KL training data. Not reportable. Retained for reproducibility only.",
+  "run": {
+    "model": "xlm-roberta-base",
+    "warm_start": "models/xlmr-base_sentiment",
+    "lambda": 0.5,
+    "batch_size": 32,
+    "lr": 2e-5,
+    "ce_data": "cached MMS zh shard (232,262 rows)",
+    "parallel_corpus": "data/processed/parallel_corpus.csv (500 source IDs x 27 languages)"
+  },
+  "epochs": {
+    "epoch_1": {
+      "train_ce": 0.6892,
+      "train_kl": 0.0216,
+      "train_total": 0.7001,
+      "val_ce": 0.6713,
+      "val_acc": 0.7247,
+      "val_clcs": 0.9987,
+      "checkpoint": "results/checkpoints/xlmr_lambda0.5_contaminated/epoch_1_contaminated"
+    },
+    "epoch_2": {
+      "train_ce": 0.6389,
+      "train_kl": 0.0032,
+      "train_total": 0.6405,
+      "val_ce": 0.6404,
+      "val_acc": 0.7315,
+      "val_clcs": 0.9860,
+      "checkpoint": "results/checkpoints/xlmr_lambda0.5/epoch_2"
+    }
+  }
+}

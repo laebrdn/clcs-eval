@@ -1,0 +1,17 @@
+torch==2.11.0
+transformers==5.8.0
+datasets==4.8.5
+accelerate==1.13.0
+sentencepiece==0.2.1
+numpy==2.4.4
+pandas==3.0.2
+scikit-learn==1.8.0
+scipy==1.17.1
+matplotlib==3.10.9
+seaborn==0.13.2
+huggingface_hub==1.14.0
+jupyter
+ipykernel
+tqdm==4.67.3
+pyyaml
+pytest==9.0.3
