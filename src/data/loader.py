@@ -77,26 +77,51 @@ def load_mms(
     split: Optional[str] = None,
     cache_dir: Optional[str | Path] = None,
 ) -> DatasetDict:
-    """Load the Brand24/mms multilingual sentiment dataset from HuggingFace.
+    """Load the Brand24/mms multilingual sentiment dataset.
+
+    Prefers a local parquet file at ``<cache_dir>/downloads/mms_full.parquet``
+    when it exists (no token or internet required).  Falls back to the
+    HuggingFace Hub identifier ``"Brand24/mms"`` otherwise (requires
+    ``HF_TOKEN`` in the environment for the gated repo).
 
     Parameters
     ----------
     split:
-        Dataset split to load (e.g. ``"train"``, ``"test"``).  If ``None``
-        (default) the full :class:`~datasets.DatasetDict` is returned.
+        Dataset split to load (e.g. ``"train"``).  If ``None`` (default) the
+        full :class:`~datasets.DatasetDict` is returned.
     cache_dir:
-        Optional path to a local cache directory for the HuggingFace datasets
-        library.
+        Optional path to a local cache directory.  Also checked for a
+        pre-downloaded ``downloads/mms_full.parquet`` file.
 
     Returns
     -------
     DatasetDict
         The loaded dataset (or a single split if *split* is given).
     """
-    cache_dir = str(cache_dir) if cache_dir is not None else None
     import os
-    token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
-    dataset = load_dataset("Brand24/mms", cache_dir=cache_dir, token=token, trust_remote_code=True)
+
+    cache_dir_path = Path(cache_dir) if cache_dir is not None else None
+    cache_dir_str = str(cache_dir_path) if cache_dir_path is not None else None
+
+    local_parquet = (
+        cache_dir_path / "downloads" / "mms_full.parquet"
+        if cache_dir_path is not None
+        else None
+    )
+
+    if local_parquet is not None and local_parquet.exists():
+        dataset = load_dataset(
+            "parquet",
+            data_files={"train": str(local_parquet)},
+            cache_dir=cache_dir_str,
+        )
+    else:
+        token = os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
+        dataset = load_dataset(
+            "Brand24/mms",
+            cache_dir=cache_dir_str,
+            token=token,
+        )
 
     # --- print schema and row counts ---
     print("=== Brand24/mms schema ===")
