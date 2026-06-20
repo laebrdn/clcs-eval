@@ -79,9 +79,9 @@ All scores use the corrected (non-contaminated) evaluation split.
 CLCS and Macro F1 measure different properties and should not be collapsed
 into a single "quality" number:
 
-- Macro F1 asks *is the label right?* — model prediction vs. gold.
-- CLCS asks *does the model treat the same meaning the same way across
-  languages?* — the model's predictions vs. each other, invariant to translation.
+- Macro F1 asks is the label right? — model prediction vs. gold.
+- CLCS asks does the model treat the same meaning the same way across
+  languages? — the model's predictions vs. each other, invariant to translation.
 
 Because the two axes are orthogonal, every model falls into one of four regimes:
 
@@ -93,29 +93,29 @@ Because the two axes are orthogonal, every model falls into one of four regimes:
 The two off-diagonal cells are the ones that matter for deployment:
 
 - **Consistent but not correct** (e.g. mBERT: CLCS 0.733, Macro F1 0.467).
-  The model applies a *stable but mistaken* decision boundary uniformly across
+  The model applies a stable but mistaken decision boundary uniformly across
   languages — here, exploiting language-specific label biases rather than
-  transferable sentiment signal. This is the more *tractable* failure: no
+  transferable sentiment signal. This is the more tractable failure: no
   language community is disadvantaged relative to another, and a single
   systematic bias can be recalibrated. Crucially, consistency alone is
   gameable — a degenerate classifier that always predicts one class scores
   perfect CLCS while being useless — so CLCS is only meaningful when read
-  *jointly* with accuracy.
+  jointly with accuracy.
 
-- Accurate but inconsistent is the more *deceptive* failure, and the one
+- Accurate but inconsistent is the more deceptive failure, and the one
   standard leaderboards miss. A model can be correct in aggregate while
-  diverging *per language* on identical content, because strong languages
+  diverging per language on identical content, because strong languages
   compensate for weak ones in the average. This is fundamentally a
   fairness/equity problem: in a deployed system (content moderation,
   feedback triage), the same complaint is flagged negative in one language and
   neutral in another. Aggregate accuracy never reveals this; CLCS does. Although
-  no single model in our table is a clean example at the *model* level, this
+  no single model in our table is a clean example at the model level, this
   pattern appears sharply at the language-pair level — see the Bulgarian
   analysis below.
 
 Why the XLM-R result matters under this framing. XLM-R shows the tightest
 alignment between CLCS (0.790 → 0.863 fine-tuned) and Macro F1 (0.780). That
-coupling is evidence its consistency is *substantive* — driven by genuine
+coupling is evidence its consistency is substantive — driven by genuine
 language-invariant sentiment representation — rather than the degenerate,
 majority-class consistency that inflates CLCS without accuracy. Models where the
 two metrics decouple (mBERT, mDeBERTa) are consistent for the wrong reasons.
@@ -129,7 +129,7 @@ two metrics decouple (mBERT, mDeBERTa) are consistent for the wrong reasons.
 Bulgarian (bg) recurs across the lowest-CLCS pairs. Three explanations are
 plausible, and in a translation-built benchmark they are confounded: because
 the parallel corpus is generated with OPUS-MT, a poor en→bg translation breaks the
-"same input" assumption, so an observed sentiment *flip* may reflect the
+"same input" assumption, so an observed sentiment flip may reflect the
 translation altering meaning rather than the model being inconsistent. We ran a
 four-part diagnostic (`scripts/diagnose_bulgarian.py`,
 [results/scores/bulgarian_diagnosis.json](results/scores/bulgarian_diagnosis.json))
@@ -137,14 +137,14 @@ to separate the causes.
 
 **1. Native vs. translated — rules out a modeling deficit.**
 XLM-R scores 0.842 Macro F1 on native Bulgarian text from Brand24/mms —
-*above* the 0.780 corpus mean. The model represents Bulgarian sentiment perfectly
-well. Performance only collapses on the *translated* split (mean pairwise
+above the 0.780 corpus mean. The model represents Bulgarian sentiment perfectly
+well. Performance only collapses on the translated split (mean pairwise
 CLCS 0.694), so the failure is on the translation side, not in the model.
 
 **2. Translation quality — bg is the single worst language.**
 Reference-free round-trip chrF (OPUS-MT en→bg, then NLLB bg→en, scored against the
 English source) gives bg 0.409 — dead last of all 27 languages (0th percentile).
-*Note:* COMET-QE was unavailable offline, so round-trip chrF is used as the quality
+Note: COMET-QE was unavailable offline, so round-trip chrF is used as the quality
 proxy; it conflates forward and backward MT quality and is therefore corroborating
 rather than definitive on its own.
 
@@ -153,21 +153,21 @@ Restricting to higher-quality translations lifts bg's consistency directly:
 filtering above the 25th-percentile chrF cutoff yields +4.9 pp (0.694 → 0.743), and
 above the 50th-percentile cutoff (156 samples) yields +9.0 pp (0.694 → 0.785) —
 nearly matching the global CLCS mean of 0.790. Because removing the
-*lowest-quality translations alone* recovers almost all of the gap, low translation
+lowest-quality translations alone recovers almost all of the gap, low translation
 quality is causally responsible for Bulgarian's depressed CLCS.
 
 **4. Flip type — consistent with hedging MT, not inversion.**
 Across 514 disagreements in bg's five worst partners (hi, zh, he, sl, uk),
 75.5% are neutral-drift (a one-step shift involving the neutral class) and only
 24.5% are negation flips (pos↔neg). This is the signature of MT output that
-*softens or hedges* sentiment rather than inverting it — again pointing to
+softens or hedges sentiment rather than inverting it — again pointing to
 translation, not modeling. Notably, two of the five worst partners (sl, uk) are
-themselves Slavic, so bg pairs badly even *within* its own family, which localizes
+themselves Slavic, so bg pairs badly even within its own family, which localizes
 the problem to the bg translation pipeline rather than a cross-family effect.
 
 **Verdict.** Bulgarian's appearance in the worst pairs is driven primarily by
 OPUS-MT translation quality, not by language-specific modeling difficulty. This
-is a *benchmark-construction* limitation rather than a model failure — and it
+is a benchmark-construction limitation rather than a model failure — and it
 illustrates exactly why a translation-built cross-lingual benchmark must report a
 translation-quality control. A controlled re-translation (e.g. NLLB-200 forward, or
 human-verified bg references) is the natural next step.
