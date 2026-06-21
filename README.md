@@ -184,6 +184,9 @@ human-verified bg references) is the natural next step.
 language families consistently achieve the highest within-family agreement across all
 models; Semitic and Japonic families show the most cross-model variance.*
 
+*Note: Slavic within-family agreement is partly depressed by a Bulgarian translation artifact ; it reflects benchmark construction, not model capability.*
+
+
 ---
 
 ## Repository structure
